@@ -21,6 +21,7 @@ import numpy as np
 from PyQt5 import QtWidgets
 
 DEFAULT_SINE_FREQUENCY = 440.
+DEFAULT_SINE_FREQUENCY1 = 440.
 
 
 class SineGenerator:
@@ -29,12 +30,14 @@ class SineGenerator:
 
     def __init__(self, parent):
         self.f = 440.
-
+        self.f1 = 440.
         self.settings = SettingsWidget(parent)
         self.settings.spinBox_sine_frequency.valueChanged.connect(self.setf)
-
+        self.settings.spinBox_sine_frequency1.valueChanged.connect(self.setf1)
         self.offset = 0
+        self.offset1 = 0
         self.lastt = 0
+        self.lastt1 = 0
 
     def setf(self, f):
         oldf = self.f
@@ -44,15 +47,30 @@ class SineGenerator:
         lastphase = 2. * np.pi * self.lastt * oldf + self.offset
         newphase = 2. * np.pi * self.lastt * self.f + self.offset
         self.offset += (lastphase - newphase)
-        self.offset %= 2. * np.pi  
+        self.offset %= 2. * np.pi   #I guess here just make the phase smaller than 2*pi
+
+    def setf1(self, f1):
+        oldf = self.f1
+        self.f1 = f1
+
+        # the offset is adapted to avoid phase break
+        lastphase1 = 2. * np.pi * self.lastt1 * oldf + self.offset1
+        newphase1 = 2. * np.pi * self.lastt1 * self.f1 + self.offset1
+        self.offset1 += (lastphase1 - newphase1)
+        self.offset1 %= 2. * np.pi   #I guess here just make the phase smaller than 2*pi
 
     def settingsWidget(self):
         return self.settings
 
     def signal(self, t):
         self.lastt = t[-1]
-        return np.sin(2. * np.pi * t * self.f + self.offset)
+        return np.sin(2. * np.pi * t * self.f + self.offset) 
+        # + np.sin(2. * np.pi * t * (50+self.f) + self.offset)
 
+    def signal1(self, t):
+        self.lastt1 = t[-1]
+        return np.sin(2. * np.pi * t * (self.f1) + self.offset1) 
+        # + np.sin(2. * np.pi * t * (50+self.f) + self.offset)
 
 class SettingsWidget(QtWidgets.QWidget):
 
@@ -69,15 +87,29 @@ class SettingsWidget(QtWidgets.QWidget):
         self.spinBox_sine_frequency.setObjectName("spinBox_sine_frequency")
         self.spinBox_sine_frequency.setSuffix(" Hz")
 
+        self.spinBox_sine_frequency1 = QtWidgets.QDoubleSpinBox(self)
+        self.spinBox_sine_frequency1.setKeyboardTracking(False)
+        self.spinBox_sine_frequency1.setDecimals(2)
+        self.spinBox_sine_frequency1.setSingleStep(1)
+        self.spinBox_sine_frequency1.setMinimum(20)
+        self.spinBox_sine_frequency1.setMaximum(22000)
+        self.spinBox_sine_frequency1.setProperty("value", DEFAULT_SINE_FREQUENCY)
+        self.spinBox_sine_frequency1.setObjectName("spinBox_sine_frequency1")
+        self.spinBox_sine_frequency1.setSuffix(" Hz")
+
         self.formLayout = QtWidgets.QFormLayout(self)
 
         self.formLayout.addRow("Frequency:", self.spinBox_sine_frequency)
+        self.formLayout.addRow("Frequency1:", self.spinBox_sine_frequency1)
 
         self.setLayout(self.formLayout)
 
     def saveState(self, settings):
         settings.setValue("sine frequency", self.spinBox_sine_frequency.value())
+        settings.setValue("sine frequency1", self.spinBox_sine_frequency1.value())
 
     def restoreState(self, settings):
         sine_freq = settings.value("sine frequency", DEFAULT_SINE_FREQUENCY, type=float)
         self.spinBox_sine_frequency.setValue(sine_freq)
+        sine_freq1 = settings.value("sine frequency1", DEFAULT_SINE_FREQUENCY1, type=float)
+        self.spinBox_sine_frequency1.setValue(sine_freq1)

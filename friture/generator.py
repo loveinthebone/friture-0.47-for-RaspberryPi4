@@ -127,18 +127,18 @@ class Generator_Widget(QtWidgets.QWidget):
 
         self.settings_dialog.combobox_output_device.currentIndexChanged.connect(self.device_changed)
 
-#        channels = AudioBackend().get_readable_current_output_channels()
-#        for channel in channels:
-#            self.settings_dialog.comboBox_firstChannel.addItem(channel)
-#            self.settings_dialog.comboBox_secondChannel.addItem(channel)
+    #    channels = AudioBackend().get_readable_current_output_channels()
+    #    for channel in channels:
+    #        self.settings_dialog.comboBox_firstChannel.addItem(channel)
+    #        self.settings_dialog.comboBox_secondChannel.addItem(channel)
 
-#        current_device = AudioBackend().get_readable_current_output_device()
-#        self.settings_dialog.combobox_output_device.setCurrentIndex(current_device)
+        # current_device = AudioBackend().get_readable_current_output_device()
+        # self.settings_dialog.combobox_output_device.setCurrentIndex(current_device)
 
-#        first_channel = AudioBackend().get_current_first_channel()
-#        self.settings_dialog.comboBox_firstChannel.setCurrentIndex(first_channel)
-#        second_channel = AudioBackend().get_current_second_channel()
-#        self.settings_dialog.comboBox_secondChannel.setCurrentIndex(second_channel)
+        # first_channel = AudioBackend().get_current_first_channel()
+        # self.settings_dialog.comboBox_firstChannel.setCurrentIndex(first_channel)
+        # second_channel = AudioBackend().get_current_second_channel()
+        # self.settings_dialog.comboBox_secondChannel.setCurrentIndex(second_channel)
 
     def device_changed(self, index):
         device = AudioBackend().output_devices[index]
@@ -222,7 +222,8 @@ class Generator_Widget(QtWidgets.QWidget):
         if status:
             self.logger.info(status)
 
-        N = frame_count
+        N = frame_count 
+#The size of an audio frame is calculated by multiplying the sample size in bytes by the number of channels
 
         if self.state == STOPPED:
             out_data.fill(0)
@@ -250,6 +251,7 @@ class Generator_Widget(QtWidgets.QWidget):
 
         generator = generators[0]
         floatdata = generator.signal(t)
+        floatdata1 = generator.signal1(t)
 
         # add smooth ramps at start/stop to avoid undesirable bursts
         if self.state == STARTING:
@@ -257,6 +259,7 @@ class Generator_Widget(QtWidgets.QWidget):
             t_ramp = self.t_start + np.arange(0, N / float(SAMPLING_RATE), 1. / float(SAMPLING_RATE))
             t_ramp = np.clip(t_ramp, 0., RAMP_LENGTH)
             floatdata *= t_ramp / RAMP_LENGTH
+            floatdata1 *= t_ramp / RAMP_LENGTH
             self.t_start += N / float(SAMPLING_RATE)
             if self.t_start > RAMP_LENGTH:
                 self.state = PLAYING
@@ -267,6 +270,7 @@ class Generator_Widget(QtWidgets.QWidget):
             t_ramp = self.t_stop - np.arange(0, N / float(SAMPLING_RATE), 1. / float(SAMPLING_RATE))
             t_ramp = np.clip(t_ramp, 0., RAMP_LENGTH)
             floatdata *= t_ramp / RAMP_LENGTH
+            floatdata1 *= t_ramp / RAMP_LENGTH
             self.t_stop -= N / float(SAMPLING_RATE)
 
             if self.t_stop < 0.:
@@ -276,7 +280,15 @@ class Generator_Widget(QtWidgets.QWidget):
         # output channels are interleaved
         # we output to all channels simultaneously with the same data
         maxOutputChannels = AudioBackend().get_device_outputchannels_count(self.device)
-        floatdata = np.tile(floatdata, (maxOutputChannels, 1)).transpose()
+        # self.logger.info("maxOutputChannels %d   ", maxOutputChannels) #on Kingson's laptop this is 32
+        # floatdata = np.tile(floatdata, (maxOutputChannels, 1)).transpose()
+        test = np.zeros((maxOutputChannels,len(floatdata)))
+        test[0]=floatdata
+        test[1]=floatdata1
+        floatdata=test.transpose()
+        # floatdata = np.tile(floatdata, (maxOutputChannels, 1))
+        # floatdata[1]=floatdata1
+        # floatdata = floatdata.transpose()
 
         int16info = np.iinfo(np.int16)
         norm_coeff = min(abs(int16info.min), int16info.max)
