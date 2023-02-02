@@ -18,6 +18,9 @@ See the `project homepage`_ for screenshots and more information.
 .. _`project homepage`: http://friture.org
 
 With this branch of Friture, customized by International Audio Holding, we added following features to friture:
+
 1. Compatibility with Raspberry PI 4. This branch can be installed in Raspberry PI 4, which has ARM CPU architecture.
+
 2. Added a new panel called "Scope_IAH". It is used to plot the FFT amplitudes at two user specified frewquencies. Such a feature is useful for crosstalk analysis.
+
 3. The "Sine" wave generator is modified so that the user can adjust the frequencies of the two sine waves at the left and right output channels seperately. So the left and right channels can play two different tones. Such a feature is also used in crosstalk analysis.
