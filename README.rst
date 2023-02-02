@@ -19,7 +19,7 @@ See the `project homepage`_ for screenshots and more information.
 
 With this branch of Friture, customized by International Audio Holding, we added following features to friture:
 
-1. Compatibility with Raspberry PI 4. This branch can be installed in Raspberry PI 4, which has ARM CPU architecture.
+1. Compatibility with Raspberry PI 4. This branch can be installed in Raspberry PI 4, which has ARMv6 CPU architecture.
 
 2. Added a new panel called "Scope_IAH". It is used to plot the FFT amplitudes at two user specified frewquencies. Such a feature is useful for crosstalk analysis.
 
