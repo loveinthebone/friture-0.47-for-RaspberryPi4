@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=Friture
+Comment=Real-time visualization of live audio data
+Icon=friture
+Exec=friture
+Terminal=false
+Categories=AudioVideo;Audio;
+Keywords=audio;spectrum;spectrogram;
+X-AppImage-Version=.glibc2.14

@@ -1,0 +1,3 @@
+deb http://us.archive.ubuntu.com/ubuntu/ xenial main universe
+deb http://ppa.launchpad.net/djcj/libcurl-slim/ubuntu xenial main
+deb file:/home/kingson/Program/Friture_for_RPI/friture-0.47-for-rpi4-master/appimage/friture ./
