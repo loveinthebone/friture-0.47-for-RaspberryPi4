@@ -33,6 +33,7 @@ DEFAULT_WEIGHTING = 1  # A
 DEFAULT_SHOW_FREQ_LABELS = True
 DEFAULT_RESPONSE_TIME = 0.025
 DEFAULT_RESPONSE_TIME_INDEX = 0
+DEFAULT_CHANNEL = 0
 
 
 class Spectrum_Settings_Dialog(QtWidgets.QDialog):
@@ -50,7 +51,7 @@ class Spectrum_Settings_Dialog(QtWidgets.QDialog):
         self.comboBox_dual_channel.setObjectName("dual")
         self.comboBox_dual_channel.addItem("Channel 1")
         self.comboBox_dual_channel.addItem("Channel 2")
-        self.comboBox_dual_channel.setCurrentIndex(0)
+        self.comboBox_dual_channel.setCurrentIndex(DEFAULT_CHANNEL)
 
         self.comboBox_fftsize = QtWidgets.QComboBox(self)
         self.comboBox_fftsize.setObjectName("comboBox_fftsize")
@@ -124,7 +125,7 @@ class Spectrum_Settings_Dialog(QtWidgets.QDialog):
         self.checkBox_showFreqLabels.setObjectName("showFreqLabels")
         self.checkBox_showFreqLabels.setChecked(DEFAULT_SHOW_FREQ_LABELS)
 
-        self.formLayout.addRow("Measurement type:", self.comboBox_dual_channel)
+        self.formLayout.addRow("Measurement Channel:", self.comboBox_dual_channel)
         self.formLayout.addRow("FFT Size:", self.comboBox_fftsize)
         self.formLayout.addRow("Frequency scale:", self.comboBox_freqscale)
         self.formLayout.addRow("Min frequency:", self.spinBox_minfreq)
@@ -185,7 +186,7 @@ class Spectrum_Settings_Dialog(QtWidgets.QDialog):
 
     # method
     def saveState(self, settings):
-        # settings.setValue("fftSize", self.comboBox_fftsize.currentIndex())
+        settings.setValue("dual", self.comboBox_dual_channel.currentIndex())
         settings.setValue("fftSize", self.comboBox_fftsize.currentIndex())
         settings.setValue("freqScale", self.comboBox_freqscale.currentIndex())
         settings.setValue("freqMin", self.spinBox_minfreq.value())
@@ -198,6 +199,8 @@ class Spectrum_Settings_Dialog(QtWidgets.QDialog):
 
     # method
     def restoreState(self, settings):
+        channel = settings.value("dual", DEFAULT_CHANNEL, type=int)  # which channel to plot
+        self.comboBox_dual_channel.setCurrentIndex(channel)
         fft_size = settings.value("fftSize", DEFAULT_FFT_SIZE, type=int)  # 7th index is 1024 points
         self.comboBox_fftsize.setCurrentIndex(fft_size)
         freqscale = settings.value("freqScale", DEFAULT_FREQ_SCALE, type=int)
