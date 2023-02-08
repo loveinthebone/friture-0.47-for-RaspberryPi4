@@ -185,6 +185,7 @@ class Spectrum_Settings_Dialog(QtWidgets.QDialog):
 
     # method
     def saveState(self, settings):
+        # settings.setValue("fftSize", self.comboBox_fftsize.currentIndex())
         settings.setValue("fftSize", self.comboBox_fftsize.currentIndex())
         settings.setValue("freqScale", self.comboBox_freqscale.currentIndex())
         settings.setValue("freqMin", self.spinBox_minfreq.value())

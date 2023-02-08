@@ -142,7 +142,7 @@ class Spectrum_Widget(QtWidgets.QWidget):
             # sp2.shape = self.freq.shape
             # self.w.shape = self.freq.shape
 
-            if self.channels ==1 and floatdata.shape[0] > 1:
+            if self.channels ==2 and floatdata.shape[0] > 1:
                 sp2n[:, i] = self.proc.analyzelive(floatdata[1, :])
 
                 self.old_index += int(needed)
@@ -156,7 +156,7 @@ class Spectrum_Widget(QtWidgets.QWidget):
                 self.w.shape = self.freq.shape
 
                 dB_spectrogram = self.log_spectrogram(sp2)+ self.w
-            else:
+            elif self.channels ==1 and floatdata.shape[0] > 1:
                 sp1n[:, i] = self.proc.analyzelive(floatdata[0, :])
                 self.old_index += int(needed)
 
