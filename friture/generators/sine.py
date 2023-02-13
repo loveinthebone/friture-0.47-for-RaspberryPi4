@@ -50,11 +50,11 @@ class SineGenerator:
         self.offset %= 2. * np.pi   #I guess here just make the phase smaller than 2*pi
 
     def setf1(self, f1):
-        oldf = self.f1
+        oldf1 = self.f1
         self.f1 = f1
 
         # the offset is adapted to avoid phase break
-        lastphase1 = 2. * np.pi * self.lastt1 * oldf + self.offset1
+        lastphase1 = 2. * np.pi * self.lastt1 * oldf1 + self.offset1
         newphase1 = 2. * np.pi * self.lastt1 * self.f1 + self.offset1
         self.offset1 += (lastphase1 - newphase1)
         self.offset1 %= 2. * np.pi   #I guess here just make the phase smaller than 2*pi
@@ -99,8 +99,8 @@ class SettingsWidget(QtWidgets.QWidget):
 
         self.formLayout = QtWidgets.QFormLayout(self)
 
-        self.formLayout.addRow("Frequency:", self.spinBox_sine_frequency)
-        self.formLayout.addRow("Frequency1:", self.spinBox_sine_frequency1)
+        self.formLayout.addRow("Frequency 1:", self.spinBox_sine_frequency)
+        self.formLayout.addRow("Frequency 2:", self.spinBox_sine_frequency1)
 
         self.setLayout(self.formLayout)
 
