@@ -39,10 +39,10 @@ from friture.spectrum_settings import (Spectrum_Settings_Dialog,  # settings dia
 
 SMOOTH_DISPLAY_TIMER_PERIOD_MS = 25
 DEFAULT_TIMERANGE = 2 * SMOOTH_DISPLAY_TIMER_PERIOD_MS
-DEFAULT_FREQUENCY1 = 1000
-DEFAULT_FREQUENCY2 = 1500
+DEFAULT_FREQUENCY1 = 6200
+DEFAULT_FREQUENCY2 = 6000
 
-DEFAULT_MIN=-220
+DEFAULT_MIN=-200
 DEFAULT_MAX=30
 
 
@@ -186,14 +186,14 @@ class Scope_Widget1(QtWidgets.QWidget):
 
             a=(self.fft_size*(1-self.overlap)/float(SAMPLING_RATE))*a
             
-            # b_min=min(b)
-            # b_max=max(b)
+            b_min=min(b)
+            b_max=max(b)
             
-            #Kingson: trying to plot in autoscale in y axis. 
+            # #Kingson: trying to plot in autoscale in y axis. 
             # The y axis ticker is set in above in this function: self._scope_data.vertical_axis.setRange
-            # self.RANGE_MIN=b_min*1.2 
-            # self.RANGE_MAX=b_min*1.2
-            # self._scope_data.vertical_axis.setRange(1000*self.RANGE_MIN, 1000*self.RANGE_MAX)# Make the unit to be mV
+            self.RANGE_MIN=b_min-0.1*(b_max-b_min)
+            self.RANGE_MAX=b_max+0.1*(b_max-b_min)
+            self.set_yrange(self.RANGE_MIN, self.RANGE_MAX)# Make the unit to be mV
 
 
 
@@ -275,13 +275,13 @@ class Scope_Widget1(QtWidgets.QWidget):
 
     def set_frequency1(self, frequency):
         self.frequency1 = frequency
-        self.PlotZoneUp.curve.setTitle("Ch1 at "+str(self.frequency1) +" Hz")
+        self.PlotZoneUp.curve.setTitle("Ch1")
         self.PlotZoneUp.update()
         # self._scope_data.horizontal_axis.setRange(0, self.timerange)
 
     def set_frequency2(self, frequency):
         self.frequency2 = frequency
-        self.PlotZoneUp.curve2.setTitle("Ch2 at "+str(self.frequency2) +" Hz")
+        self.PlotZoneUp.curve2.setTitle("Ch2")
         self.PlotZoneUp.update()
         # self._curve_2.name = "Ch2 at "+str(self.frequency2) +" Hz"
         # self._scope_data.horizontal_axis.setRange(0, self.timerange)

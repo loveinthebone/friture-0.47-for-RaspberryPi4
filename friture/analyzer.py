@@ -41,7 +41,7 @@ from friture.audiobuffer import AudioBuffer  # audio ring buffer class
 from friture.audiobackend import AudioBackend  # audio backend class
 from friture.dockmanager import DockManager
 from friture.tilelayout import TileLayout
-from friture.levels import Levels_Widget
+# from friture.levels import Levels_Widget
 
 # the display timer could be made faster when the processing
 # power allows it, firing down to every 10 ms
@@ -86,13 +86,13 @@ class Friture(QMainWindow, ):
         self.about_dialog = About_Dialog(self, self.slow_timer)
         self.settings_dialog = Settings_Dialog(self)
 
-        self.level_widget = Levels_Widget(self)
-        self.level_widget.set_buffer(self.audiobuffer)
-        self.audiobuffer.new_data_available.connect(self.level_widget.handle_new_data)
+        # self.level_widget = Levels_Widget(self)
+        # self.level_widget.set_buffer(self.audiobuffer)
+        # self.audiobuffer.new_data_available.connect(self.level_widget.handle_new_data)
 
         self.hboxLayout = QHBoxLayout(self.ui.centralwidget)
         self.hboxLayout.setContentsMargins(0, 0, 0, 0)
-        self.hboxLayout.addWidget(self.level_widget)
+        # self.hboxLayout.addWidget(self.level_widget)
 
         self.centralLayout = TileLayout()
         self.centralLayout.setContentsMargins(0, 0, 0, 0)
@@ -102,7 +102,7 @@ class Friture(QMainWindow, ):
 
         # timer ticks
         self.display_timer.timeout.connect(self.dockmanager.canvasUpdate)
-        self.display_timer.timeout.connect(self.level_widget.canvasUpdate)
+        # self.display_timer.timeout.connect(self.level_widget.canvasUpdate)
         self.display_timer.timeout.connect(AudioBackend().fetchAudioData)
 
         # toolbar clicks

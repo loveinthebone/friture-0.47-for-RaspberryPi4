@@ -279,7 +279,7 @@ class Generator_Widget(QtWidgets.QWidget):
 
         # output channels are interleaved
         # we output to all channels simultaneously with the same data
-        maxOutputChannels = AudioBackend().get_device_outputchannels_count(self.device)
+        # maxOutputChannels = AudioBackend().get_device_outputchannels_count(self.device)
         # self.logger.info("maxOutputChannels %d   ", maxOutputChannels) #on Kingson's laptop this is 32
         # floatdata = np.tile(floatdata, (maxOutputChannels, 1)).transpose()
         # test = np.zeros((maxOutputChannels,len(floatdata)))
@@ -300,7 +300,9 @@ class Generator_Widget(QtWidgets.QWidget):
         self.t += N / float(SAMPLING_RATE)
 
         # data copy
+        out_data.fill(0)
         out_data[:] = intdata
+        
 
     def canvasUpdate(self):
         return

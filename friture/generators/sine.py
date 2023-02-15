@@ -20,8 +20,8 @@
 import numpy as np
 from PyQt5 import QtWidgets
 
-DEFAULT_SINE_FREQUENCY = 440.
-DEFAULT_SINE_FREQUENCY1 = 440.
+DEFAULT_SINE_FREQUENCY = 6000.
+DEFAULT_SINE_FREQUENCY1 = 6200.
 
 
 class SineGenerator:
@@ -79,7 +79,7 @@ class SettingsWidget(QtWidgets.QWidget):
 
         self.spinBox_sine_frequency = QtWidgets.QDoubleSpinBox(self)
         self.spinBox_sine_frequency.setKeyboardTracking(False)
-        self.spinBox_sine_frequency.setDecimals(2)
+        self.spinBox_sine_frequency.setDecimals(0)
         self.spinBox_sine_frequency.setSingleStep(1)
         self.spinBox_sine_frequency.setMinimum(20)
         self.spinBox_sine_frequency.setMaximum(22000)
@@ -89,18 +89,18 @@ class SettingsWidget(QtWidgets.QWidget):
 
         self.spinBox_sine_frequency1 = QtWidgets.QDoubleSpinBox(self)
         self.spinBox_sine_frequency1.setKeyboardTracking(False)
-        self.spinBox_sine_frequency1.setDecimals(2)
+        self.spinBox_sine_frequency1.setDecimals(0)
         self.spinBox_sine_frequency1.setSingleStep(1)
         self.spinBox_sine_frequency1.setMinimum(20)
         self.spinBox_sine_frequency1.setMaximum(22000)
-        self.spinBox_sine_frequency1.setProperty("value", DEFAULT_SINE_FREQUENCY)
+        self.spinBox_sine_frequency1.setProperty("value", DEFAULT_SINE_FREQUENCY1)
         self.spinBox_sine_frequency1.setObjectName("spinBox_sine_frequency1")
         self.spinBox_sine_frequency1.setSuffix(" Hz")
 
         self.formLayout = QtWidgets.QFormLayout(self)
 
-        self.formLayout.addRow("Frequency:", self.spinBox_sine_frequency)
-        self.formLayout.addRow("Frequency1:", self.spinBox_sine_frequency1)
+        self.formLayout.addRow("Ch1:", self.spinBox_sine_frequency)
+        self.formLayout.addRow("Ch2:", self.spinBox_sine_frequency1)
 
         self.setLayout(self.formLayout)
 
