@@ -282,7 +282,9 @@ class Generator_Widget(QtWidgets.QWidget):
         maxOutputChannels = AudioBackend().get_device_outputchannels_count(self.device)
         # self.logger.info("maxOutputChannels %d   ", maxOutputChannels) #on Kingson's laptop this is 32
         # floatdata = np.tile(floatdata, (maxOutputChannels, 1)).transpose()
-        test = np.zeros((maxOutputChannels,len(floatdata)))
+        # test = np.zeros((maxOutputChannels,len(floatdata)))
+        test = np.zeros((2,len(floatdata)))
+
         test[0]=floatdata
         test[1]=floatdata1
         floatdata=test.transpose()
