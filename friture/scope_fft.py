@@ -66,7 +66,7 @@ class Scope_Widget1(QtWidgets.QWidget):
         self.PlotZoneUp = TimePlot(self)
         self.PlotZoneUp.setObjectName("PlotZoneUp")
 
-        self.PlotZoneUp.setverticaltitle("FFT amplitude (dB)")
+        self.PlotZoneUp.setverticaltitle("FFT Amp (dB)")
         self.PlotZoneUp.sethorizontaltitle("Time (s)")
 
 
