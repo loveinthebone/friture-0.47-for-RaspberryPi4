@@ -117,6 +117,17 @@ class Generator_Widget(QtWidgets.QWidget):
         self.combobox_generator_kind.activated.connect(self.stacked_settings_layout.setCurrentIndex)
         self.start_stop_button.toggled.connect(self.start_stop_button_toggle)
 
+
+        # self.setVisible(False)
+        # self.setFixedWidth(0.1)
+        # self.setHidden(True)
+        
+        
+        # prevent from hiding or moving the toolbar
+        # self.toggleViewAction().setVisible(True)
+        # self.setMovable(True)
+        # self.setFloatable(True)
+
         # initialize the settings dialog
         devices = AudioBackend().get_readable_output_devices_list()
         if self.device is not None:
@@ -347,6 +358,7 @@ class Generator_Settings_Dialog(QtWidgets.QDialog):
 
         if device_index is not None:
             self.combobox_output_device.setCurrentIndex(device_index)
+
 
     def saveState(self, settings):
         # for the output device, we search by name instead of index, since

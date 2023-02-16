@@ -117,11 +117,11 @@ class Friture(QMainWindow, ):
         # make sure the toolbar is shown
         # in case it was closed by mistake (before it was made impossible)
         self.ui.toolBar.setVisible(True)
-
+        
         # prevent from hiding or moving the toolbar
-        self.ui.toolBar.toggleViewAction().setVisible(False)
-        self.ui.toolBar.setMovable(False)
-        self.ui.toolBar.setFloatable(False)
+        self.ui.toolBar.toggleViewAction().setVisible(True)
+        self.ui.toolBar.setMovable(True)
+        self.ui.toolBar.setFloatable(True)
 
         # start timers
         self.timer_toggle()
