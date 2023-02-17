@@ -377,7 +377,8 @@ class __AudioBackend(QtCore.QObject):
             samplerate=SAMPLING_RATE,
             blocksize=FRAMES_PER_BUFFER,
             device=device['index'],
-            channels=device['max_output_channels'],
+            # channels=device['max_output_channels'],
+            channels=2,
             dtype=int16,
             callback=callback)
 
