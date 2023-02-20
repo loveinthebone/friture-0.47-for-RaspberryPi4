@@ -121,13 +121,36 @@ class TileLayout(QLayout):
                 if overflow == 0:
                     break
 
-        rowHeight = rect.height()//rowCount
+        # rowHeight = rect.height()//rowCount
+
+        # # now iterate over the items
+        # i = 0
+        # for rowIndex in lines.keys():
+        #     columnCount = lines[rowIndex]
+        #     columnWidth = rect.width()//columnCount
+        #     for columnIndex in range(columnCount):
+        #         item = self.itemList[i]
+        #         x = rect.x() + columnIndex*columnWidth
+        #         y = rect.y() + rowIndex*rowHeight
+
+        #         if not testOnly:
+        #             item.setGeometry(QRect(QPoint(x, y), QSize(columnWidth, rowHeight)))
+
+        #         i += 1
+
+        # return rect.height()
+        
+        rowHeight = rect.height()//(rowCount-3/4) #trying to make the height of last row 1/4 that of the rest
+        # columnWidth = rect.width()//columnCount
 
         # now iterate over the items
         i = 0
+        lastRow= False
         for rowIndex in lines.keys():
             columnCount = lines[rowIndex]
             columnWidth = rect.width()//columnCount
+            if rowIndex == rowCount-1:
+                lastRow= True
             for columnIndex in range(columnCount):
                 item = self.itemList[i]
                 x = rect.x() + columnIndex*columnWidth
@@ -135,10 +158,15 @@ class TileLayout(QLayout):
 
                 if not testOnly:
                     item.setGeometry(QRect(QPoint(x, y), QSize(columnWidth, rowHeight)))
+                    if lastRow == True:
+                        item.setGeometry(QRect(QPoint(x, y), QSize(columnWidth, rowHeight//4)))
 
                 i += 1
 
+        
+
         return rect.height()
+
 
 # example:
 # 1 => X
