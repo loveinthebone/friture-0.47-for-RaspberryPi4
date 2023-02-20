@@ -19,7 +19,7 @@
 
 import logging
 
-from PyQt5 import QtCore
+from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
 from friture.defaults import DEFAULT_DOCKS
 from friture.dock import Dock
@@ -50,7 +50,7 @@ class DockManager(QtCore.QObject):
         new_dock = Dock(self.parent(), name)
         #self.parent().addDockWidget(QtCore.Qt.TopDockWidgetArea, new_dock)
         self.parent().centralLayout.addWidget(new_dock)
-
+        # new_dock.setSizePolicy(QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding))
         self.docks += [new_dock]
 
     # slot

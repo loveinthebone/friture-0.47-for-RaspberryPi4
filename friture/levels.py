@@ -60,7 +60,7 @@ class Levels_Widget(QtWidgets.QWidget):
         self.label_peak = QtWidgets.QLabel(self)
         self.label_peak.setFont(font)
         # QtCore.Qt.AlignBottom|QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft
-        self.label_peak.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignRight)
+        # self.label_peak.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignRight)
         self.label_peak.setObjectName("label_peak")
 
         self.label_peak_legend = QtWidgets.QLabel(self)
@@ -93,6 +93,7 @@ class Levels_Widget(QtWidgets.QWidget):
         self.label_peak_legend.setText("dB FS\n Peak")
         self.label_rms.setTextFormat(QtCore.Qt.PlainText)
         self.label_peak.setTextFormat(QtCore.Qt.PlainText)
+
         # self.label_rms.setSizePolicy(QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding))
         # self.label_rms_legend.setSizePolicy(QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding))
         # self.label_peak.setSizePolicy(QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding))

@@ -54,10 +54,10 @@ class ControlBar(QtWidgets.QWidget):
         self.layout.addWidget(self.combobox_select)
         self.layout.addWidget(self.settings_button)
         self.layout.addWidget(self.close_button)
-        self.layout.addStretch()
+        # self.layout.addStretch()
 
         self.setLayout(self.layout)
 
-        self.setMaximumHeight(24)
+        # self.setMaximumHeight(24)
         self.layout.setContentsMargins(0, 0, 0, 0)
         self.layout.setSpacing(0)
