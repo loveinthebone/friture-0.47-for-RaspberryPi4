@@ -140,7 +140,7 @@ class TileLayout(QLayout):
 
         # return rect.height()
         
-        rowHeight = rect.height()//(rowCount-3/4) #trying to make the height of last row 1/4 that of the rest
+        rowHeight = rect.height()//(rowCount-4/5) #trying to make the height of last row 1/4 that of the rest
         # columnWidth = rect.width()//columnCount
 
         # now iterate over the items
@@ -159,7 +159,7 @@ class TileLayout(QLayout):
                 if not testOnly:
                     item.setGeometry(QRect(QPoint(x, y), QSize(columnWidth, rowHeight)))
                     if lastRow == True:
-                        item.setGeometry(QRect(QPoint(x, y), QSize(columnWidth, rowHeight//4)))
+                        item.setGeometry(QRect(QPoint(x, y), QSize(columnWidth, rowHeight//5)))
 
                 i += 1
 
