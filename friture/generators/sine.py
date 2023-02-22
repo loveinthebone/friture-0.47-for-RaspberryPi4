@@ -20,8 +20,8 @@
 import numpy as np
 from PyQt5 import QtWidgets
 
-DEFAULT_SINE_FREQUENCY = 440.
-DEFAULT_SINE_FREQUENCY1 = 440.
+DEFAULT_SINE_FREQUENCY = 6000.
+DEFAULT_SINE_FREQUENCY1 = 6200.
 
 
 class SineGenerator:
@@ -29,8 +29,8 @@ class SineGenerator:
     name = "Sine"
 
     def __init__(self, parent):
-        self.f = 440.
-        self.f1 = 440.
+        self.f = 6000.
+        self.f1 = 6200.
         self.settings = SettingsWidget(parent)
         self.settings.spinBox_sine_frequency.valueChanged.connect(self.setf)
         self.settings.spinBox_sine_frequency1.valueChanged.connect(self.setf1)
@@ -64,12 +64,12 @@ class SineGenerator:
 
     def signal(self, t):
         self.lastt = t[-1]
-        return np.sin(2. * np.pi * t * self.f + self.offset) 
+        return 0.2*np.sin(2. * np.pi * t * self.f + self.offset) 
         # + np.sin(2. * np.pi * t * (50+self.f) + self.offset)
 
     def signal1(self, t):
         self.lastt1 = t[-1]
-        return np.sin(2. * np.pi * t * (self.f1) + self.offset1) 
+        return 0.2*np.sin(2. * np.pi * t * (self.f1) + self.offset1) 
         # + np.sin(2. * np.pi * t * (50+self.f) + self.offset)
 
 class SettingsWidget(QtWidgets.QWidget):
