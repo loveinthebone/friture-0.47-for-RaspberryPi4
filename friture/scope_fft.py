@@ -185,16 +185,7 @@ class Scope_Widget1(QtWidgets.QWidget):
             a=arange(self.buffersize)
 
             a=(self.fft_size*(1-self.overlap)/float(SAMPLING_RATE))*a
-            
-            b_min=min(b)
-            b_max=max(b)
-            
-            # #Kingson: trying to plot in autoscale in y axis. 
-            # The y axis ticker is set in above in this function: self._scope_data.vertical_axis.setRange
-            self.RANGE_MIN=b_min-0.1*(b_max-b_min)
-            self.RANGE_MAX=b_max+0.1*(b_max-b_min)
-            self.set_yrange(self.RANGE_MIN, self.RANGE_MAX)# Make the unit to be mV
-
+        
 
 
             # scaled_a=a/self.buffersize
@@ -224,14 +215,17 @@ class Scope_Widget1(QtWidgets.QWidget):
                 self.buff3[:-1]=self.buff2[1:]
 
                 b1=self.buff3
-                # a=arange(self.buffersize)
+        
 
-                # scaled_a=a/self.buffersize
-
-                # b1=(b1-range_middle)/(range_length/2)  #turn b into the range (-1, 1)
-                # scaled_b1=1-(b1+1)/2.
-
-                # self._curve_2.setData(scaled_a, scaled_b)
+                b_min=min(min(b),min(b1))
+                b_max=max(max(b),max(b1))
+                
+                # #Kingson: trying to plot in autoscale in y axis. 
+                # The y axis ticker is set in above in this function: self._scope_data.vertical_axis.setRange
+                self.RANGE_MIN=b_min-0.1*(b_max-b_min)
+                self.RANGE_MAX=b_max+0.1*(b_max-b_min)
+                self.set_yrange(self.RANGE_MIN, self.RANGE_MAX)# Make the unit to be mV
+               
                 
                 # self.PlotZoneUp.setdataTwoChannels(scaled_a, b, b1)
                 self.PlotZoneUp.setdataTwoChannels(a, b, b1)
