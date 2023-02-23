@@ -60,7 +60,7 @@ class Levels_Widget(QtWidgets.QWidget):
         self.label_peak = QtWidgets.QLabel(self)
         self.label_peak.setFont(font)
         # QtCore.Qt.AlignBottom|QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft
-        self.label_peak.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignRight)
+        # self.label_peak.setAlignment(QtCore.Qt.AlignBottom | QtCore.Qt.AlignRight)
         self.label_peak.setObjectName("label_peak")
 
         self.label_peak_legend = QtWidgets.QLabel(self)

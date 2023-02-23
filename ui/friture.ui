@@ -83,7 +83,7 @@
      <normaloff>:/images-src/window-icon.svg</normaloff>:/images-src/window-icon.svg</iconset>
    </property>
    <property name="text">
-    <string>About Friture</string>
+    <string>About Friture IAH</string>
    </property>
   </action>
   <action name="actionNew_dock">

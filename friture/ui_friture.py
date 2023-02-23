@@ -68,6 +68,6 @@ class Ui_MainWindow(object):
         self.actionStart.setShortcut(_translate("MainWindow", "Space"))
         self.actionSettings.setText(_translate("MainWindow", "Settings"))
         self.actionSettings.setToolTip(_translate("MainWindow", "Display settings dialog"))
-        self.actionAbout.setText(_translate("MainWindow", "About Friture"))
+        self.actionAbout.setText(_translate("MainWindow", "About Friture IAH"))
         self.actionNew_dock.setText(_translate("MainWindow", "New dock"))
         self.actionNew_dock.setToolTip(_translate("MainWindow", "Add a new dock to Friture window"))

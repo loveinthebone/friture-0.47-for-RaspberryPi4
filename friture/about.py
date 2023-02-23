@@ -28,7 +28,7 @@ from friture.statisticswidget import StatisticsWidget
 
 aboutText = """
 <p> <b>Friture %s</b> (dated %s)</p>
-<p> Friture is an application for real-time audio analysis.</p>
+<p> Friture is an application for real-time audio analysis. This is a version customized by IAH.</p>
 <p> License is GPLv3.</p>
 <p> Homepage: <a href="http://friture.org">http://friture.org</a></p>
 <p> <a href="http://friture.org/privacy.html">Privacy Policy</a></p>
@@ -63,7 +63,7 @@ class About_Dialog(QtWidgets.QDialog):
 
         self.setObjectName("About_Dialog")
         self.resize(400, 300)
-        self.setWindowTitle("About Friture")
+        self.setWindowTitle("About Friture IAH")
 
         icon = QtGui.QIcon()
         icon.addPixmap(QtGui.QPixmap(":/images-src/window-icon.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)

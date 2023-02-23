@@ -49,8 +49,13 @@ class Generator_Widget(QtWidgets.QWidget):
         self.audiobuffer = None
 
         self.setObjectName("Generator_Widget")
-        self.grid_layout = QtWidgets.QGridLayout(self)
-        self.grid_layout.setObjectName("grid_layout")
+        # self.horizontalLayout = QtWidgets.QGridLayout(self)
+        self.horizontalLayout = QtWidgets.QHBoxLayout(self)
+        self.horizontalLayout.setContentsMargins(0, 0, 1, 1)
+        self.horizontalLayout.setGeometry(QtCore.QRect(10, 0, 561, 61))
+
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        
 
         self.generators = []
         self.generators.append(SineGenerator(self))
@@ -66,7 +71,7 @@ class Generator_Widget(QtWidgets.QWidget):
 
         for generator in self.generators:
             self.combobox_generator_kind.addItem(generator.name)
-            self.stacked_settings_layout.addWidget(generator.settingsWidget())
+            self.stacked_settings_layout.addWidget(generator.settingsWidget()) # here add the sine wave frequencies
 
         self.combobox_generator_kind.setCurrentIndex(DEFAULT_GENERATOR_KIND_INDEX)
 
@@ -110,11 +115,18 @@ class Generator_Widget(QtWidgets.QWidget):
         self.start_stop_button.setCheckable(True)
         self.start_stop_button.setChecked(False)
 
-        self.grid_layout.addWidget(self.start_stop_button, 0, 0, 1, 1)
-        self.grid_layout.addWidget(self.combobox_generator_kind, 1, 0, 1, 1)
-        self.grid_layout.addLayout(self.stacked_settings_layout, 2, 0, 1, 1)
-
-        self.combobox_generator_kind.activated.connect(self.stacked_settings_layout.setCurrentIndex)
+        # self.horizontalLayout.addWidget(self.start_stop_button, 0, 0, 1, 1)
+        # self.horizontalLayout.addWidget(self.combobox_generator_kind, 1, 0, 1, 1)
+        # self.horizontalLayout.addLayout(self.stacked_settings_layout, 2, 0, 1, 1)
+       
+        self.horizontalLayout.addWidget(self.combobox_generator_kind,2)
+        self.horizontalLayout.addLayout(self.stacked_settings_layout,3)
+        # self.combobox_generator_kind.hide()
+    
+        self.horizontalLayout.addWidget(self.start_stop_button,5)
+    
+       
+        # self.combobox_generator_kind.activated.connect(self.stacked_settings_layout.setCurrentIndex)
         self.start_stop_button.toggled.connect(self.start_stop_button_toggle)
 
         # initialize the settings dialog
@@ -279,10 +291,14 @@ class Generator_Widget(QtWidgets.QWidget):
 
         # output channels are interleaved
         # we output to all channels simultaneously with the same data
-        maxOutputChannels = AudioBackend().get_device_outputchannels_count(self.device)
+
+        # maxOutputChannels = AudioBackend().get_device_outputchannels_count(self.device)
+
         # self.logger.info("maxOutputChannels %d   ", maxOutputChannels) #on Kingson's laptop this is 32
         # floatdata = np.tile(floatdata, (maxOutputChannels, 1)).transpose()
-        test = np.zeros((maxOutputChannels,len(floatdata)))
+        test = np.zeros((2,len(floatdata)))
+
+        # test = np.zeros((maxOutputChannels,len(floatdata)))
         test[0]=floatdata
         test[1]=floatdata1
         floatdata=test.transpose()
