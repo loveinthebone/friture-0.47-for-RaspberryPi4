@@ -21,7 +21,7 @@ doc/_build/*
 doc/Makefile
 doc/make.bat
 env/*
-buildenv/*
+# buildenv/*
 venv/*
 tools/*
 friture.egg-info
