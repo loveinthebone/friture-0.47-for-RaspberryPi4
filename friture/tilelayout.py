@@ -40,6 +40,8 @@ class TileLayout(QLayout):
 
     def addItem(self, item):
         self.itemList.append(item)
+ 
+
 
     def count(self):
         return len(self.itemList)
@@ -109,17 +111,17 @@ class TileLayout(QLayout):
         rowCount -= m
         columnCount -= n
 
-        # produce a dictionary: key = line index, value = column count
-        lines = {rowIndex: columnCount for rowIndex in range(rowCount)}
+        # # produce a dictionary: key = line index, value = column count
+        # lines = {rowIndex: columnCount for rowIndex in range(rowCount)}
 
-        # split the overflow over the lines
-        overflow = rowCount*columnCount - len(self.itemList)
-        while overflow > 0:
-            for i in range(rowCount):
-                lines[i] = lines[i] - 1
-                overflow -= 1
-                if overflow == 0:
-                    break
+        # # split the overflow over the lines
+        # overflow = rowCount*columnCount - len(self.itemList)
+        # while overflow > 0:
+        #     for i in range(rowCount):
+        #         lines[i] = lines[i] - 1
+        #         overflow -= 1
+        #         if overflow == 0:
+        #             break
 
         # rowHeight = rect.height()//rowCount
 
@@ -140,32 +142,101 @@ class TileLayout(QLayout):
 
         # return rect.height()
         
-        rowHeight = rect.height()//(rowCount-4/5) #trying to make the height of last row 1/4 that of the rest
-        # columnWidth = rect.width()//columnCount
+
+                # produce a dictionary: key = line index, value = column count
+        lines = {rowIndex: columnCount for rowIndex in range(rowCount)}
+
+        # split the overflow over the lines
+        overflow = rowCount*columnCount - len(self.itemList)
+        while overflow > 0:
+            for i in range(rowCount):
+                lines[i] = lines[i] - 1
+                overflow -= 1
+                if overflow == 0:
+                    break
+
+        rowHeight = rect.height()//(rowCount-3/4)
+        rowHeight0= rowHeight/4
 
         # now iterate over the items
         i = 0
-        lastRow= False
         for rowIndex in lines.keys():
-            columnCount = lines[rowIndex]
-            columnWidth = rect.width()//columnCount
-            if rowIndex == rowCount-1:
-                lastRow= True
-            for columnIndex in range(columnCount):
-                item = self.itemList[i]
-                x = rect.x() + columnIndex*columnWidth
-                y = rect.y() + rowIndex*rowHeight
+            if rowIndex==0:
+                columnCount = lines[rowIndex]
+                columnWidth = rect.width()//columnCount
+                for columnIndex in range(columnCount):
+                    item = self.itemList[i]
+                    x = rect.x() + columnIndex*columnWidth
+                    y = rect.y() + rowIndex*rowHeight0
 
-                if not testOnly:
-                    item.setGeometry(QRect(QPoint(x, y), QSize(columnWidth, rowHeight)))
-                    if lastRow == True:
-                        item.setGeometry(QRect(QPoint(x, y), QSize(columnWidth, rowHeight//5)))
+                    if not testOnly:   
+                        item.setGeometry(QRect(QPoint(x, y), QSize(columnWidth, rowHeight0)))
+                    i += 1
+            elif rowIndex==1:
+                columnCount = lines[rowIndex]
+                columnWidth = rect.width()//columnCount
+                for columnIndex in range(columnCount):
+                    item = self.itemList[i]
+                    x = rect.x() + columnIndex*columnWidth
+                    y = rect.y() + rowIndex*rowHeight0
 
-                i += 1
+                    if not testOnly:   
+                        item.setGeometry(QRect(QPoint(x, y), QSize(columnWidth, rowHeight)))
+                    i += 1
+            else:
+                columnCount = lines[rowIndex]
+                columnWidth = rect.width()//columnCount
+                for columnIndex in range(columnCount):
+                    item = self.itemList[i]
+                    x = rect.x() + columnIndex*columnWidth
+                    y = rect.y() + rowIndex*rowHeight
+
+                    if not testOnly:   
+                        item.setGeometry(QRect(QPoint(x, y), QSize(columnWidth, rowHeight)))
+                    i += 1                
+
+
+        return rect.height()
+    
+
+
+        # rowHeight = rect.height()//(rowCount-3/4) #trying to make the height of last row 1/4 that of the rest
+        # columnWidth = rect.width()//columnCount
+
+        # # # now iterate over the items
+        # # i = 0
+        # # lastRow= False
+        # # for rowIndex in lines.keys():
+        # #     columnCount = lines[rowIndex]
+        # #     columnWidth = rect.width()//columnCount
+        # #     if rowIndex == 0:
+        # #         lastRow= True
+        # #     for columnIndex in range(columnCount):
+        # #         item = self.itemList[i]
+        # #         x = rect.x() + columnIndex*columnWidth
+        # #         y = rect.y() + rowIndex*rowHeight
+
+        # #         if not testOnly:
+        # #             item.setGeometry(QRect(QPoint(x, y), QSize(columnWidth, rowHeight)))
+        # #             if lastRow == True:
+        # #                 x = rect.x() + columnIndex*columnWidth
+        # #                 y = rect.y() + rowIndex*rowHeight//4
+        # #                 item.setGeometry(QRect(QPoint(x, y), QSize(columnWidth, rowHeight//4)))
+
+        # #         i += 1
+
+        # if not testOnly:
+        #     x = rect.x() 
+        #     y = rect.y() 
+        #     self.itemList[0].setGeometry(QRect(QPoint(x, y), QSize(rect.width(), rect.height()//4)))
+
+        #     x = rect.x() 
+        #     y = rect.y() + rect.height()//4
+        #     self.itemList[1].setGeometry(QRect(QPoint(x, y), QSize(rect.width(), rect.height()*3//4)))        
 
         
 
-        return rect.height()
+        # return rect.height()
 
 
 # example:

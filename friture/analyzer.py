@@ -95,7 +95,7 @@ class Friture(QMainWindow, ):
         # self.hboxLayout.addWidget(self.level_widget)
 
         self.centralLayout = TileLayout()
-        self.centralLayout.setContentsMargins(100, 100, 0, 0)
+        self.centralLayout.setContentsMargins(0, 0, 0, 0)
         self.hboxLayout.addLayout(self.centralLayout)
 
         self.dockmanager = DockManager(self)
