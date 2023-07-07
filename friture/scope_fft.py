@@ -39,8 +39,8 @@ from friture.spectrum_settings import (Spectrum_Settings_Dialog,  # settings dia
 
 SMOOTH_DISPLAY_TIMER_PERIOD_MS = 25
 DEFAULT_TIMERANGE = 2 * SMOOTH_DISPLAY_TIMER_PERIOD_MS
-DEFAULT_FREQUENCY1 = 6200
-DEFAULT_FREQUENCY2 = 6000
+DEFAULT_FREQUENCY1 = 6433
+DEFAULT_FREQUENCY2 = 6247
 
 DEFAULT_MIN=-200
 DEFAULT_MAX=30
@@ -78,7 +78,7 @@ class Scope_Widget1(QtWidgets.QWidget):
         # initialize the class instance that will do the fft
         self.proc = audioproc()
 
-        self.fft_size = 2 ** (DEFAULT_FFT_SIZE+7)
+        self.fft_size = 2 ** (15)
 
 
         # timerange =  300  # Here in this code is actually the fft points of the fft buffer
@@ -88,7 +88,8 @@ class Scope_Widget1(QtWidgets.QWidget):
 
         self.freq = self.proc.get_freq_scale()
 
-        self.buffersize=100 #how many fft points to save
+        self.buffersize=50 #how many fft points to save
+        #self.buffersize=1600 #how many fft points to save
         self.buff1=zeros(self.buffersize)
         self.buff2=zeros(self.buffersize)
         self.buff0=zeros(self.buffersize)
@@ -105,7 +106,7 @@ class Scope_Widget1(QtWidgets.QWidget):
         # self._scope_data.vertical_axis.setRange( self.RANGE_MIN, self.RANGE_MAX)# This is simply the range of the label in y axis, has no real relation to the y data.
        
         self.old_index = 0
-        self.overlap = 3. / 4.
+        self.overlap = 2. / 3.
         self.dual_channels = True
 
         timerange =  int(self.fft_size*(1-self.overlap)*self.buffersize/float(SAMPLING_RATE))
@@ -148,9 +149,9 @@ class Scope_Widget1(QtWidgets.QWidget):
                 # FFT transform
                 sp1n[:, i] = self.proc.analyzelive(floatdata[0, :])
 
-                if self.dual_channels and floatdata.shape[0] > 1:
+              #  if self.dual_channels and floatdata.shape[0] > 1:
                     # second channel for comparison
-                    sp2n[:, i] = self.proc.analyzelive(floatdata[1, :])
+                sp2n[:, i] = self.proc.analyzelive(floatdata[1, :])
 
                 self.old_index += int(needed)
             # twoChannels = False
@@ -172,14 +173,16 @@ class Scope_Widget1(QtWidgets.QWidget):
             #check self.freq[self.freq_idx1] , see if it is close to 1000
 
             data=sp1n[self.freq_idx1]
-            data=self.log_spectrogram(data)
+            data=self.log_spectrogram(data)+17.3 #17.3dB here to compensate for the 1.7V range of the cosmos ADC
             
-
-            self.buff0=self.buff1
-            self.buff1[-1]=data
-            self.buff1[:-1]=self.buff0[1:]
-            # for i in range(len(self.buff1)-1):
-            #     self.buff1[i]=self.buff0[i+1]
+            if self.buff1==zeros(self.buffersize):
+                self.buff1=zeros(self.buffersize)+data
+            else:
+                self.buff0=self.buff1
+                self.buff1[-1]=data
+                self.buff1[:-1]=self.buff0[1:]
+                # for i in range(len(self.buff1)-1):
+                #     self.buff1[i]=self.buff0[i+1]
 
             b=self.buff1
             a=arange(self.buffersize)
@@ -206,13 +209,16 @@ class Scope_Widget1(QtWidgets.QWidget):
 #####################################################
             if twoChannels:
                 data2=sp2n[self.freq_idx2]
-                data2=self.log_spectrogram(data2)
-
-                self.buff2=self.buff3
-                self.buff3[-1]=data2
-                # for i in range(len(self.buff3)-1):
-                #     self.buff3[i]=self.buff2[i+1]
-                self.buff3[:-1]=self.buff2[1:]
+                data2=self.log_spectrogram(data2)+17.3 #17.3dB here to compensate for the 1.7V range of the cosmos ADC
+                
+                if self.buff2==zeros(self.buffersize):
+                    self.buff2=zeros(self.buffersize)+data2
+                else:
+                    self.buff2=self.buff3
+                    self.buff3[-1]=data2
+                    # for i in range(len(self.buff3)-1):
+                    #     self.buff3[i]=self.buff2[i+1]
+                    self.buff3[:-1]=self.buff2[1:]
 
                 b1=self.buff3
         
@@ -364,7 +370,8 @@ class Scope_Widget1(QtWidgets.QWidget):
         # Idea: Instead of computing the log of the data, I could pre-compute
         # a list of values associated with the colormap, and then do a search...
         epsilon = 1e-30
-        return 20. * log10((sp + epsilon)/1.732)
+        return 10. * log10((sp + epsilon)/1)
+        # return sp
 
 class Scope_Settings_Dialog(QtWidgets.QDialog):
 
