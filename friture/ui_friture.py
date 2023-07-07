@@ -52,7 +52,7 @@ class Ui_MainWindow(object):
         self.actionNew_dock.setIcon(icon3)
         self.actionNew_dock.setObjectName("actionNew_dock")
         self.toolBar.addAction(self.actionStart)
-        self.toolBar.addAction(self.actionNew_dock)
+        # self.toolBar.addAction(self.actionNew_dock)
         self.toolBar.addAction(self.actionSettings)
         self.toolBar.addAction(self.actionAbout)
 
@@ -69,5 +69,5 @@ class Ui_MainWindow(object):
         self.actionSettings.setText(_translate("MainWindow", "Settings"))
         self.actionSettings.setToolTip(_translate("MainWindow", "Display settings dialog"))
         self.actionAbout.setText(_translate("MainWindow", "About Friture IAH"))
-        self.actionNew_dock.setText(_translate("MainWindow", "New dock"))
-        self.actionNew_dock.setToolTip(_translate("MainWindow", "Add a new dock to Friture window"))
+        # self.actionNew_dock.setText(_translate("MainWindow", "New dock"))
+        # self.actionNew_dock.setToolTip(_translate("MainWindow", "Add a new dock to Friture window"))

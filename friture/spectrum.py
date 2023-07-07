@@ -56,12 +56,12 @@ class Spectrum_Widget(QtWidgets.QWidget):
         self.maxfreq = DEFAULT_MAXFREQ
         self.proc.set_maxfreq(self.maxfreq)
         self.minfreq = DEFAULT_MINFREQ
-        self.fft_size = 2 ** DEFAULT_FFT_SIZE * 32
+        self.fft_size = 2 ** (DEFAULT_FFT_SIZE +8)
         self.proc.set_fftsize(self.fft_size)
         self.spec_min = DEFAULT_SPEC_MIN
         self.spec_max = DEFAULT_SPEC_MAX
         self.weighting = DEFAULT_WEIGHTING
-        self.channels = 1
+        self.channels = 2
         self.response_time = DEFAULT_RESPONSE_TIME
 
         self.update_weighting()
@@ -123,29 +123,18 @@ class Spectrum_Widget(QtWidgets.QWidget):
 
                 # first channel
                 # FFT transform
-            #     sp1n[:, i] = self.proc.analyzelive(floatdata[0, :])
+                sp1n[:, i] = self.proc.analyzelive(floatdata[0, :])
 
-            #     if self.dual_channels and floatdata.shape[0] > 1:
-            #         # second channel for comparison
-            #         sp2n[:, i] = self.proc.analyzelive(floatdata[1, :])
-
-            #     self.old_index += int(needed)
-
-            # # compute the widget data
-            # sp1 = pyx_exp_smoothed_value_numpy(self.kernel, self.alpha, sp1n, self.dispbuffers1)
-            # sp2 = pyx_exp_smoothed_value_numpy(self.kernel, self.alpha, sp2n, self.dispbuffers2)
-            # # store result for next computation
-            # self.dispbuffers1 = sp1
-            # self.dispbuffers2 = sp2
-
-            # sp1.shape = self.freq.shape
-            # sp2.shape = self.freq.shape
-            # self.w.shape = self.freq.shape
-
-            if self.channels ==2 and floatdata.shape[0] > 1:
-                sp2n[:, i] = self.proc.analyzelive(floatdata[1, :])
+                if self.channels and floatdata.shape[0] > 1:
+                    # second channel for comparison
+                    sp2n[:, i] = self.proc.analyzelive(floatdata[1, :])
 
                 self.old_index += int(needed)
+
+ 
+
+            if self.channels ==2 and floatdata.shape[0] > 1:
+
 
                 sp2 = pyx_exp_smoothed_value_numpy(self.kernel, self.alpha, sp2n, self.dispbuffers2)
 
@@ -157,8 +146,6 @@ class Spectrum_Widget(QtWidgets.QWidget):
 
                 dB_spectrogram = self.log_spectrogram(sp2)+ self.w
             elif self.channels ==1 and floatdata.shape[0] > 1:
-                sp1n[:, i] = self.proc.analyzelive(floatdata[0, :])
-                self.old_index += int(needed)
 
                 sp1 = pyx_exp_smoothed_value_numpy(self.kernel, self.alpha, sp1n, self.dispbuffers1)
                 self.dispbuffers1 = sp1

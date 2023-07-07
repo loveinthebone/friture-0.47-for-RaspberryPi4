@@ -24,6 +24,7 @@ from friture.audiobackend import SAMPLING_RATE
 
 # shared with spectrogram.py
 DEFAULT_FFT_SIZE = 7  # 4096 points
+# DEFAULT_FFT_SIZE = 12  # 131072 points
 DEFAULT_FREQ_SCALE = 1  # log10
 DEFAULT_MAXFREQ = SAMPLING_RATE / 2
 DEFAULT_MINFREQ = 20

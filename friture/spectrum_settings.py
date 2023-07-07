@@ -23,7 +23,8 @@ from PyQt5 import QtWidgets
 from friture.audiobackend import SAMPLING_RATE
 
 # shared with spectrum_settings.py
-DEFAULT_FFT_SIZE = 9  # 16384 points
+DEFAULT_FFT_SIZE = 9  
+# DEFAULT_FFT_SIZE = 12  
 DEFAULT_FREQ_SCALE = 1  # log10
 DEFAULT_MAXFREQ = 7000
 DEFAULT_MINFREQ = 5000
@@ -55,9 +56,9 @@ class Spectrum_Settings_Dialog(QtWidgets.QDialog):
 
         self.comboBox_fftsize = QtWidgets.QComboBox(self)
         self.comboBox_fftsize.setObjectName("comboBox_fftsize")
-        self.comboBox_fftsize.addItem("32 points")
-        self.comboBox_fftsize.addItem("64 points")
-        self.comboBox_fftsize.addItem("128 points")
+        # self.comboBox_fftsize.addItem("32 points")
+        # self.comboBox_fftsize.addItem("64 points")
+        # self.comboBox_fftsize.addItem("128 points")
         self.comboBox_fftsize.addItem("256 points")
         self.comboBox_fftsize.addItem("512 points")
         self.comboBox_fftsize.addItem("1024 points")
@@ -65,6 +66,9 @@ class Spectrum_Settings_Dialog(QtWidgets.QDialog):
         self.comboBox_fftsize.addItem("4096 points")
         self.comboBox_fftsize.addItem("8192 points")
         self.comboBox_fftsize.addItem("16384 points")
+        self.comboBox_fftsize.addItem("32768 points")
+        self.comboBox_fftsize.addItem("65536 points")
+        self.comboBox_fftsize.addItem("131072 points")
         self.comboBox_fftsize.setCurrentIndex(DEFAULT_FFT_SIZE)
 
         self.comboBox_freqscale = QtWidgets.QComboBox(self)
@@ -158,9 +162,9 @@ class Spectrum_Settings_Dialog(QtWidgets.QDialog):
 
     # slot
     def fftsizechanged(self, index):
-        self.logger.info("fft_size_changed slot %d %d %f", index, 2 ** index * 32, 150000 / 2 ** index * 32)
+        self.logger.info("fft_size_changed slot %d %d %f", index, 2 ** (index +8), 150000 / 2 ** (index +8))
         # FIXME the size should not be found from the index, but attached as item data
-        fft_size = 2 ** index * 32
+        fft_size = 2 ** (index +8)
         self.parent().setfftsize(fft_size)
 
     # slot

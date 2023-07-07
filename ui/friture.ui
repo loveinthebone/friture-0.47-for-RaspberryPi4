@@ -86,17 +86,17 @@
     <string>About Friture IAH</string>
    </property>
   </action>
-  <action name="actionNew_dock">
+  <!-- <action name="actionNew_dock">
    <property name="icon">
     <iconset resource="../resources/friture.qrc">
      <normaloff>:/images-src/new-dock.svg</normaloff>:/images-src/new-dock.svg</iconset>
-   </property>
-   <property name="text">
+   </property> -->
+   <!-- <property name="text">
     <string>New dock</string>
    </property>
    <property name="toolTip">
     <string>Add a new dock to Friture window</string>
-   </property>
+   </property> -->
   </action>
  </widget>
  <resources>

@@ -78,7 +78,7 @@ class Scope_Widget1(QtWidgets.QWidget):
         # initialize the class instance that will do the fft
         self.proc = audioproc()
 
-        self.fft_size = 2 ** DEFAULT_FFT_SIZE * 32 #8192
+        self.fft_size = 2 ** (DEFAULT_FFT_SIZE+7)
 
 
         # timerange =  300  # Here in this code is actually the fft points of the fft buffer
@@ -88,7 +88,7 @@ class Scope_Widget1(QtWidgets.QWidget):
 
         self.freq = self.proc.get_freq_scale()
 
-        self.buffersize=800 #how many fft points to save
+        self.buffersize=100 #how many fft points to save
         self.buff1=zeros(self.buffersize)
         self.buff2=zeros(self.buffersize)
         self.buff0=zeros(self.buffersize)
@@ -364,7 +364,7 @@ class Scope_Widget1(QtWidgets.QWidget):
         # Idea: Instead of computing the log of the data, I could pre-compute
         # a list of values associated with the colormap, and then do a search...
         epsilon = 1e-30
-        return 10. * log10(sp + epsilon)
+        return 20. * log10((sp + epsilon)/1.732)
 
 class Scope_Settings_Dialog(QtWidgets.QDialog):
 

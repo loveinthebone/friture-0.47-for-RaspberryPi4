@@ -36,7 +36,7 @@ class Dock(QtWidgets.QWidget):
 
         self.control_bar.combobox_select.activated.connect(self.indexChanged)
         self.control_bar.settings_button.clicked.connect(self.settings_slot)
-        self.control_bar.close_button.clicked.connect(self.closeClicked)
+        # self.control_bar.close_button.clicked.connect(self.closeClicked)
 
         #self.dockwidget = QtWidgets.QWidget(self)
         self.layout = QtWidgets.QVBoxLayout(self)
