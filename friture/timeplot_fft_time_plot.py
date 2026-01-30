@@ -152,13 +152,13 @@ class TimePlot(QtWidgets.QWidget):
         self.needfullreplot = False
 
         self.curve = CurveItem()
-        self.curve.setColor(QtGui.QColor(Qt.Qt.red))
+        self.curve.setColor(QtGui.QColor(Qt.Qt.blue))
         # gives a title to the curve for the legend
         self.curve.setTitle("Ch1")
         self.canvasWidget.attach(self.curve)
 
         self.curve2 = CurveItem()
-        self.curve2.setColor(QtGui.QColor(Qt.Qt.blue))
+        self.curve2.setColor(QtGui.QColor(Qt.Qt.red))
         # gives a title to the curve for the legend
         self.curve2.setTitle("Ch2")
         # self.curve2 will be attached when needed

@@ -18,22 +18,30 @@
 # along with Friture.  If not, see <http://www.gnu.org/licenses/>.
 
 import numpy as np
-from PyQt5 import QtWidgets
+from PyQt5 import QtWidgets, QtCore
 
 DEFAULT_SINE_FREQUENCY = 6000.
 DEFAULT_SINE_FREQUENCY1 = 6200.
 
 
+
 class SineGenerator:
 
     name = "Sine"
+    freq_Changed = QtCore.pyqtSignal(int)
+    freq1_Changed = QtCore.pyqtSignal(int)
 
     def __init__(self, parent):
-        self.f = 6000.
-        self.f1 = 6200.
+        self.f = DEFAULT_SINE_FREQUENCY
+        self.f1 = DEFAULT_SINE_FREQUENCY1
         self.settings = SettingsWidget(parent)
         self.settings.spinBox_sine_frequency.valueChanged.connect(self.setf)
         self.settings.spinBox_sine_frequency1.valueChanged.connect(self.setf1)
+        
+
+
+        
+
         self.offset = 0
         self.offset1 = 0
         self.lastt = 0
@@ -42,6 +50,7 @@ class SineGenerator:
     def setf(self, f):
         oldf = self.f
         self.f = f
+
 
         # the offset is adapted to avoid phase break
         lastphase = 2. * np.pi * self.lastt * oldf + self.offset
@@ -52,6 +61,7 @@ class SineGenerator:
     def setf1(self, f1):
         oldf1 = self.f1
         self.f1 = f1
+
 
         # the offset is adapted to avoid phase break
         lastphase1 = 2. * np.pi * self.lastt1 * oldf1 + self.offset1
@@ -79,17 +89,19 @@ class SettingsWidget(QtWidgets.QWidget):
 
         self.spinBox_sine_frequency = QtWidgets.QDoubleSpinBox(self)
         self.spinBox_sine_frequency.setKeyboardTracking(False)
-        self.spinBox_sine_frequency.setDecimals(2)
+        self.spinBox_sine_frequency.setDecimals(0)
         self.spinBox_sine_frequency.setSingleStep(1)
         self.spinBox_sine_frequency.setMinimum(20)
         self.spinBox_sine_frequency.setMaximum(22000)
         self.spinBox_sine_frequency.setProperty("value", DEFAULT_SINE_FREQUENCY)
         self.spinBox_sine_frequency.setObjectName("spinBox_sine_frequency")
         self.spinBox_sine_frequency.setSuffix(" Hz")
+        self.spinBox_sine_frequency.setFixedHeight(40)
+        self.spinBox_sine_frequency.setFixedWidth(100)
   
         self.spinBox_sine_frequency1 = QtWidgets.QDoubleSpinBox(self)
         self.spinBox_sine_frequency1.setKeyboardTracking(False)
-        self.spinBox_sine_frequency1.setDecimals(2)
+        self.spinBox_sine_frequency1.setDecimals(0)
         self.spinBox_sine_frequency1.setSingleStep(1)
         self.spinBox_sine_frequency1.setMinimum(20)
         self.spinBox_sine_frequency1.setMaximum(22000)
@@ -97,13 +109,28 @@ class SettingsWidget(QtWidgets.QWidget):
         self.spinBox_sine_frequency1.setObjectName("spinBox_sine_frequency1")
         self.spinBox_sine_frequency1.setSuffix(" Hz")
         # self.spinBox_sine_frequency1.set
+        self.spinBox_sine_frequency1.setFixedHeight(40)
+        self.spinBox_sine_frequency1.setFixedWidth(150)
+
+
+        # Create the first label
+        label1 = QtWidgets.QLabel("Ch1:")
+
+        # Create the second label
+        label2 = QtWidgets.QLabel("Ch2:")
 
         # self.formLayout = QtWidgets.QFormLayout(self)
         self.qhboxlayout = QtWidgets.QHBoxLayout(self)
+
+        self.qhboxlayout.addWidget(label1)
+    
        
         self.qhboxlayout.addWidget(self.spinBox_sine_frequency)
+        self.qhboxlayout.addWidget(label2)
         
         self.qhboxlayout.addWidget(self.spinBox_sine_frequency1)
+
+        self.qhboxlayout.setAlignment(QtCore.Qt.AlignLeft)
 
         # self.qhboxlayout.addRow("Frequency 1:", self.spinBox_sine_frequency)
         # self.qhboxlayout.addRow(self.spinBox_sine_frequency,self.spinBox_sine_frequency1)

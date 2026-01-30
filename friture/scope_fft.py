@@ -66,7 +66,7 @@ class Scope_Widget1(QtWidgets.QWidget):
         self.PlotZoneUp = TimePlot(self)
         self.PlotZoneUp.setObjectName("PlotZoneUp")
 
-        self.PlotZoneUp.setverticaltitle("FFT Amp (dB)")
+        self.PlotZoneUp.setverticaltitle("Crosstalk (dB)")
         self.PlotZoneUp.sethorizontaltitle("Time (s)")
 
 
@@ -173,9 +173,19 @@ class Scope_Widget1(QtWidgets.QWidget):
             #check self.freq[self.freq_idx1] , see if it is close to 1000
 
             data=sp1n[self.freq_idx1]
-            data=self.log_spectrogram(data)+17.3 #17.3dB here to compensate for the 1.7V range of the cosmos ADC
             
-            if self.buff1==zeros(self.buffersize):
+
+
+            ####################
+            # Least Significant Bit (LSB) value of the ADC
+            LSB = 10 / (2**16)
+            data = data * LSB
+            ######################
+
+
+            data=self.log_spectrogram(data) #17.3dB here to compensate for the 1.7V range of the cosmos ADC
+            
+            if self.buff1.all()==0:
                 self.buff1=zeros(self.buffersize)+data
             else:
                 self.buff0=self.buff1
@@ -206,13 +216,22 @@ class Scope_Widget1(QtWidgets.QWidget):
 
 
             # self._curve.setData(scaled_a, scaled_b)
-#####################################################
+  ################################################
             if twoChannels:
                 data2=sp2n[self.freq_idx2]
-                data2=self.log_spectrogram(data2)+17.3 #17.3dB here to compensate for the 1.7V range of the cosmos ADC
+
+
+                            ####################
+                # Least Significant Bit (LSB) value of the ADC
+                LSB = 10 / (2**16)
+                data2 = data2 * LSB
+                ######################
+
+
+                data2=self.log_spectrogram(data2) #17.3dB here to compensate for the 1.7V range of the cosmos ADC
                 
-                if self.buff2==zeros(self.buffersize):
-                    self.buff2=zeros(self.buffersize)+data2
+                if self.buff3.all()==0:
+                    self.buff3=zeros(self.buffersize)+data2
                 else:
                     self.buff2=self.buff3
                     self.buff3[-1]=data2

@@ -41,6 +41,10 @@ class Dock(QtWidgets.QWidget):
         #self.dockwidget = QtWidgets.QWidget(self)
         self.layout = QtWidgets.QVBoxLayout(self)
         self.layout.addWidget(self.control_bar)
+
+        # Make the control_bar widget invisible
+        # self.control_bar.setVisible(False)
+
         self.layout.setContentsMargins(0, 0, 0, 0)
         # self.dockwidget.setLayout(self.layout)
 
@@ -78,6 +82,16 @@ class Dock(QtWidgets.QWidget):
         self.audiobuffer.new_data_available.connect(self.audiowidget.handle_new_data)
 
         self.layout.addWidget(self.audiowidget)
+
+        # # Create a horizontal layout for the Generator_Widget and the button
+        # generator_layout = QtWidgets.QHBoxLayout()
+        # generator_layout.addWidget(self.audiowidget)
+
+        # # Create a spacer item to push the button to the right side
+        # spacer = QtWidgets.QSpacerItem(0, 0, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        # generator_layout.addItem(spacer)
+
+        # self.layout.addLayout(generator_layout)
 
         index = widgetIds().index(widgetId)
         self.control_bar.combobox_select.setCurrentIndex(index)

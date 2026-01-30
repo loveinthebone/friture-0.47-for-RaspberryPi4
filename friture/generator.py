@@ -49,13 +49,14 @@ class Generator_Widget(QtWidgets.QWidget):
         self.audiobuffer = None
 
         self.setObjectName("Generator_Widget")
-        # self.horizontalLayout = QtWidgets.QGridLayout(self)
-        self.horizontalLayout = QtWidgets.QHBoxLayout(self)
-        self.horizontalLayout.setContentsMargins(0, 0, 1, 1)
-        self.horizontalLayout.setGeometry(QtCore.QRect(10, 0, 561, 61))
+        # self.gridLayout = QtWidgets.QGridLayout(self)
+        self.gridLayout = QtWidgets.QGridLayout(self)
+        self.gridLayout.setContentsMargins(0, 0, 1, 1)
+        # self.gridLayout.setGeometry(QtCore.QRect(10, 0, 561, 61))
 
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        
+        self.gridLayout.setObjectName("gridLayout")
+
+
 
         self.generators = []
         self.generators.append(SineGenerator(self))
@@ -74,6 +75,8 @@ class Generator_Widget(QtWidgets.QWidget):
             self.stacked_settings_layout.addWidget(generator.settingsWidget()) # here add the sine wave frequencies
 
         self.combobox_generator_kind.setCurrentIndex(DEFAULT_GENERATOR_KIND_INDEX)
+
+        self.combobox_generator_kind.hide() #make the wave type choice invisible
 
         self.t = 0.
         self.t_start = 0.
@@ -99,7 +102,10 @@ class Generator_Widget(QtWidgets.QWidget):
             except Exception:
                 self.logger.exception("Failed to open stream")
 
+
         self.start_stop_button = QtWidgets.QPushButton(self)
+
+
 
         startStopIcon = QtGui.QIcon()
         startStopIcon.addPixmap(QtGui.QPixmap(":/images-src/start.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
@@ -114,16 +120,31 @@ class Generator_Widget(QtWidgets.QWidget):
         self.start_stop_button.setToolTip("Start/Stop generator")
         self.start_stop_button.setCheckable(True)
         self.start_stop_button.setChecked(False)
+        self.start_stop_button.setMinimumHeight(40)
+        # self.start_stop_button.setFixedWidth(500)
 
-        # self.horizontalLayout.addWidget(self.start_stop_button, 0, 0, 1, 1)
-        # self.horizontalLayout.addWidget(self.combobox_generator_kind, 1, 0, 1, 1)
-        # self.horizontalLayout.addLayout(self.stacked_settings_layout, 2, 0, 1, 1)
+
+        # self.gridLayout.addWidget(self.start_stop_button, 0, 0, 1, 1)
+        # self.gridLayout.addWidget(self.combobox_generator_kind, 1, 0, 1, 1)
+        # self.gridLayout.addLayout(self.stacked_settings_layout, 2, 0, 1, 1)
        
-        self.horizontalLayout.addWidget(self.combobox_generator_kind,2)
-        self.horizontalLayout.addLayout(self.stacked_settings_layout,3)
+        self.gridLayout.addWidget(self.combobox_generator_kind,0,0)
+        self.gridLayout.addLayout(self.stacked_settings_layout,0,1)
         # self.combobox_generator_kind.hide()
+
     
-        self.horizontalLayout.addWidget(self.start_stop_button,5)
+        self.gridLayout.addWidget(self.start_stop_button,0,2)
+        self.gridLayout.setColumnStretch(2, 1)
+        # Add a stretchable spacer
+
+        # self.gridLayout.setAlignment(QtCore.Qt.AlignLeft)
+
+        # spacer = QtWidgets.QSpacerItem(0, 0, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        # self.gridLayout.addItem(spacer)
+
+
+        
+       
     
        
         # self.combobox_generator_kind.activated.connect(self.stacked_settings_layout.setCurrentIndex)
